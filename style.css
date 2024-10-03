@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #1dc0da;
+    text-align: center;
+}
+
+hr {
+    background-color: black;
+    height: 2px;
+}
+
+h2 {
+    color: #1dc0da;
+    margin-top: 55px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input, textarea {
+    width: 550px; /* Adjusted to 100% for better responsiveness */
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #100f0f;
+    border-radius: 4px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #218838;
+}
+
+.resume {
+    margin-top: 20px;
+    display: none;
+}
+
+.resume-output {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.resume-output h2 {
+    text-align: center; /* Center the name */
+    background-color: #333;
+    color: white; /* Added color for contrast */
+}
+
+.contact-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
