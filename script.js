@@ -12,8 +12,8 @@ document.getElementById('resume-form').addEventListener('submit', function(event
     const jobDescription = document.getElementById('job-description').value;
     const degree = document.getElementById('degree').value;
     const college = document.getElementById('college').value;
-    const skills = document.getElementById('skills').value.split(',');
-    const certificate = document.getElementById('certificate').value.split(',');
+    const skills = document.getElementById('skills').value.split(',').map(skill => skill.trim());
+    const certificate = document.getElementById('certificate').value.split(',').map(cert => cert.trim());
 
     // Creating resume output
     const resumeOutput = `
@@ -32,11 +32,11 @@ document.getElementById('resume-form').addEventListener('submit', function(event
         <p><strong>${degree}</strong> from ${college}</p>
         <h4>Skills:</h4>
         <ul>
-            ${skills.map(skill => `<li>${skill.trim()}</li>`).join('')}
+            ${skills.map(skill => `<li>${skill}</li>`).join('')}
         </ul>
         <h4>Certifications:</h4>
         <ul>
-            ${certificate.map(cert => `<li>${cert.trim()}</li>`).join('')}
+            ${certificate.map(cert => `<li>${cert}</li>`).join('')}
         </ul>
     `;
 
@@ -44,17 +44,60 @@ document.getElementById('resume-form').addEventListener('submit', function(event
     document.getElementById('resume').style.display = 'block';
 
     // Enable download button
-    document.getElementById('download-button').style.display = 'inline-block';
-    document.getElementById('download-button').onclick = function() {
+    const downloadButton = document.getElementById('download-button');
+    downloadButton.style.display = 'inline-block';
+
+    downloadButton.onclick = function() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        
-        // Set up the PDF content
-        doc.fromHTML(document.getElementById('resume-output'), 10, 10, {
-            'width': 190 // Adjust width for PDF
+
+        let y = 10;
+        const margin = 10;
+
+        // Name
+        doc.setFontSize(22);
+        doc.text(name, margin, y);
+        y += 10;
+
+        // Contact Information
+        doc.setFontSize(12);
+        doc.text(`Email: ${email}`, margin, y); y += 6;
+        doc.text(`Phone: ${phone}`, margin, y); y += 6;
+        doc.text(`LinkedIn: ${linkedin}`, margin, y); y += 6;
+        doc.text(`Address: ${address}`, margin, y); y += 10;
+
+        // Experience
+        doc.setFontSize(16);
+        doc.text("Experience", margin, y); y += 10;
+        doc.setFontSize(12);
+        doc.text(`${jobTitle} at ${company}`, margin, y); y += 6;
+        doc.text(jobDescription, margin, y); y += 10;
+
+        // Education
+        doc.setFontSize(16);
+        doc.text("Education", margin, y); y += 10;
+        doc.setFontSize(12);
+        doc.text(`${degree} from ${college}`, margin, y); y += 10;
+
+        // Skills
+        doc.setFontSize(16);
+        doc.text("Skills", margin, y); y += 10;
+        doc.setFontSize(12);
+        skills.forEach(skill => {
+            doc.text(`- ${skill}`, margin, y); y += 6;
+        });
+        y += 10;
+
+        // Certifications
+        doc.setFontSize(16);
+        doc.text("Certifications", margin, y); y += 10;
+        doc.setFontSize(12);
+        certificate.forEach(cert => {
+            doc.text(`- ${cert}`, margin, y); y += 6;
         });
 
         // Save the PDF
-        doc.save(`${name.replace(/\s+/g, '_')}_Resume.pdf`);
+        doc.save("resume.pdf");
     };
 });
+
